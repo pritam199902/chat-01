@@ -6,6 +6,8 @@ import Navbar from '../Base/Navbar'
 
 import ErrorMessage from '../Base/ErrorMessage'
 import Message from '../Message/Message.jsx'
+import Toaster from '../Base/Toaster';
+
 
 
 // socket
@@ -87,7 +89,7 @@ function Chat() {
         socket.on("message", (list) => {
             // load messages
             // console.log(list);
-            // alert("mesgae received")
+            Toaster.info("mesgae received")
 
             setmessages(list)
             setIsLoading(false)
@@ -123,6 +125,9 @@ function Chat() {
             date: new Date(),
             isSent: false
         }
+
+
+        // console.log(data);
 
 
 
@@ -183,6 +188,7 @@ function Chat() {
                                         type="text"
                                         ref={inputRef}
                                         disabled={isLoading}
+                                        readOnly={sending}
                                         style={styles.inputMessageBox}
                                         className="form-control shadow-3-strong "
                                         placeholder="Type here..."

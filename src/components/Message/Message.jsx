@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 // import ScrollToBottom from 'react-scroll-to-bottom'
 import Image from '../Base/Image'
+import ReactEmoji from 'react-emoji';
 
 function Message({ messages, me }) {
 
@@ -52,7 +53,7 @@ function Message({ messages, me }) {
                         <div className="col">
                             <div style={styles.myMessageLayout} >
                                 <div >
-                                    {message.text}
+                                    {ReactEmoji.emojify(message.text)}
                                 </div>
                             </div>
 
@@ -62,7 +63,8 @@ function Message({ messages, me }) {
                     <div className="row m-0">
                         <div className="col">
                             <div className="" style={styles.myTime}>
-                             <TimeFormat date={message.createOn} /> 
+                                <TimeFormat date={message.createOn} /> {!message.isSeen ? <i className="fas fa-check" style={{ color: '#fff', fontSize: '12px', fontWeight: 555, marginLeft: '10px' }} /> :
+                                    <i className="fas fa-check-double" style={{ color: 'cadetblue', fontSize: '12px', fontWeight: 555, marginLeft: '10px' }} />}
                             </div>
                         </div>
                     </div>
@@ -77,7 +79,8 @@ function Message({ messages, me }) {
 
     // User message
     const UserMessage = ({ message }) => {
-        
+        // console.log(message);
+
         return (
 
             <div className="row m-0 mb-1" style={{ justifyContent: 'flex-start' }}>
@@ -93,7 +96,7 @@ function Message({ messages, me }) {
 
                             <div style={styles.userMessageLayout} >
                                 <div >
-                                    {message.text}
+                                    {ReactEmoji.emojify(message.text)}
                                 </div>
                             </div>
                         </div>
@@ -102,7 +105,7 @@ function Message({ messages, me }) {
                     <div className="row m-0">
                         <div className="col">
                             <div style={styles.userTime}>
-                                <TimeFormat date={message.createOn} />  <i className="fa fa-check" style={{color: 'cadetblue', fontSize: '12px', fontWeight: 555, marginLeft: '10px'}} />
+                                <TimeFormat date={message.createOn} />
                             </div>
                         </div>
                     </div>
@@ -160,6 +163,7 @@ const styles = {
 
         borderRadius: '20px 20px 0px 20px',
         // borderRadius: '0px 30px 0px 30px',
+        wordBreak: 'break-word'
 
     },
 
@@ -176,13 +180,14 @@ const styles = {
 
     userMessageLayout: {
         backgroundColor: "#fff",
-        color: '#08d489',
+        color: '#4a6',
         margin: '2px 0px',
         padding: '10px 15px',
         fontSize: '15px',
         float: 'left',
-        borderRadius: '0px 50px 50px 50px'
+        borderRadius: '0px 50px 50px 50px',
         // borderRadius: '30px 0px 30px 0px',
+        wordBreak: 'break-word'
 
     },
 

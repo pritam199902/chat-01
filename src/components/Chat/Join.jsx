@@ -9,7 +9,6 @@ import socket from '../socket/Socket'
 import Toaster from '../Base/Toaster'
 
 function Join() {
-    document.body.style.backgroundColor = "#999999"
     const history = useHistory()
 
     const email = useRef()

@@ -69,12 +69,15 @@ function ChatHome() {
                     })
 
                     socket.emit("getAllUser", { userid }, ({ users }) => {
-                        console.log("getAllUser :  ", users);
+                        // console.log("getAllUser :  ", users);
                         // load messages
                         if (mount) {
                             setUserList(users)
                             setIsLoading(false)
                         }
+
+                        
+                
                     })
 
 
@@ -99,7 +102,7 @@ function ChatHome() {
 
 
         socket.on("newUserAdded", ({ load, name }) => {
-            console.log("newUserAdded :  ", load);
+            // console.log("newUserAdded :  ", load);
             // load messages
             if (load) {
                 Toaster.info(`${name} is added to your list!`)
@@ -113,13 +116,13 @@ function ChatHome() {
 
 
 
-        socket.on('currentUserStatus', ({status})=>{
+        socket.on('currentUserStatus', ({ status }) => {
             alert("currentUserStatus")
         })
 
 
         socket.on("getUserStatus", ({ status }) => {
-            console.log("getUserStatus :  ", status);
+            // console.log("getUserStatus :  ", status);
             // load messages
             if (mount) {
                 setUserStatus(status)
@@ -130,50 +133,95 @@ function ChatHome() {
 
         // notification
         socket.on("notification", ({ text }) => {
-            console.log("notification :  ", text);
+            // console.log("notification :  ", text);
             // load messages
             if (mount) {
-                alert(text)
+                Toaster.info(text)
             }
         })
 
 
+        // socket.on("message", (list) => {
+        //     // load messages
+        //     // console.log(list[list.length -1]);
+        //     const m = list[list.length -1]
+        //     const b = UserList.filter(d=> d.userid == m.sender)[0]
+        //     // console.log(b);
+        //     Toaster.clear()
+        //     Toaster.info(`New message from ${b.name}`)
 
 
-        return () => {
-            mount = false
-        }
-    }, [reload])
+        //     // setmessages(list)
+        //     setIsLoading(false)
+        //     // inputRef.current.focus()
+
+        // })
 
 
 
 
 
+    return () => {
+        mount = false
+    }
+}, [reload])
 
 
-    return (
-        <>
-            <BlankNavbar name={Profile ? Profile.name : 'User'} />
-            <div className="container-fluid mt-5 pt-3" >
-                {isLoading ?
-                    <Loading size="50px" />
-                    :
-                    <>
-                        <div className="row m-0 my-2">
-                            <div className="col-xl-4 col-lg-5 col-md-8 col-sm-10 col-xs-11 m-auto">
 
-                                {/* user list */}
-                                <Users userlist={UserList} statuslist={UserStatus} />
-                            </div>
+
+// useEffect(() => {
+//     var mount = true
+
+//     socket.on("message", (list) => {
+//         // load messages
+//         console.log(UserList);
+//         const m = list[list.length -1]
+//         const b = UserList.filter(d=> d.userid == m.sender)[0]
+//         // console.log(b);
+//         Toaster.clear()
+//         Toaster.info(`New message.`)
+
+//         if (mount){
+//             // setmessages(list)
+//             setIsLoading(false)
+//             // inputRef.current.focus()
+//         }
+
+//     })
+
+
+//     return () => {
+//         mount=false
+//     }
+// }, [])
+
+
+
+
+
+return (
+    <>
+        <BlankNavbar name={Profile ? Profile.name : 'User'} />
+        <div className="container-fluid mt-5 pt-3" >
+            {isLoading ?
+                <Loading size="50px" />
+                :
+                <>
+                    <div className="row m-0 my-2">
+                        <div className="col-xl-4 col-lg-5 col-md-8 col-sm-10 col-xs-11 m-auto">
+
+                            {/* user list */}
+                            <Users userlist={UserList} statuslist={UserStatus} />
                         </div>
+                    </div>
 
-                        {/* more contact floating btn */}
-                        {/* <MoreContact userid={Profile ? Profile.userid : null} statuslist={UserStatus} newadded={isNewAdded} /> */}
-                    </>
-                }
-            </div>
-        </>
-    )
+                    {/* more contact floating btn */}
+                    {/* <MoreContact userid={Profile ? Profile.userid : null} statuslist={UserStatus} newadded={isNewAdded} /> */}
+                </>
+            }
+        </div>
+    </>
+)
 }
 
 export default ChatHome
